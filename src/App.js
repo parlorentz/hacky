@@ -35,47 +35,88 @@ class App extends React.Component {
 		});
   }
   
-  renderTableData() {
-    /* const width = this.state.width;
-    const isMobile = width <= 500;
-    const isTablet = width >= 501 && width <= 1000;
-    const isDesktop = width >= 1001; */
-    return this.state.users.map((user, _index) => {
-      if (!user.id.value) {
-        return;
-      }
-      return (
-        <tr key={user.id.value}>
-          <td>
-            <div>
-              <div>
-                <img src={user.picture.thumbnail}/>
-                <br></br>{'gender: ' + user.gender}
-                <br></br>{
-                  'name: ' + 
-                  user.name.title + ' ' + 
-                  user.name.first + ' ' + 
-                  user.name.last
-                }
-                <br></br>{'e-mail: ' + user.email}
-              </div>
-            </div>
-          </td>
+  renderTable() {
+    const width = this.state.width;
+    // Mobile
+    if (width <= 500) {
+      const rows = Math.ceil(this.state.users.length / 1);
+      return this.renderTableMobile(rows,[]);
+    }
+    // Tablet
+    if (width >= 501 && width <= 1000) {
+      const rows = Math.ceil(this.state.users.length / 2);
+      return this.renderTableTablet(rows,[]);
+    }
+    // Desktop
+    if (width >= 1001) {
+      const rows = Math.ceil(this.state.users.length / 4);
+      return this.renderTableDesktop(rows,[]);
+    }
+  }
+
+  renderTableMobile(rows, table) {
+    for (var i = 0; i < rows; i++) {
+      table.push(
+        <tr key={i}>
+          { this.state.users[i] && this.renderTableCell(this.state.users[i]) }
         </tr>
       )
-    })
+    }
+    return table;
+  }
+
+  renderTableTablet(rows, table) {
+    for (var i = 0; i < rows; i++) {
+      table.push(
+        <tr key={i}>
+          { this.state.users[i*4+0] && this.renderTableCell(this.state.users[i*4+0]) }
+          { this.state.users[i*4+1] && this.renderTableCell(this.state.users[i*4+1]) }
+        </tr>
+      )
+    }
+    return table;
+  }
+
+  renderTableDesktop(rows, table) {
+    for (var i = 0; i < rows; i++) {
+      table.push(
+        <tr key={i}>
+          { this.state.users[i*4+0] && this.renderTableCell(this.state.users[i*4+0]) }
+          { this.state.users[i*4+1] && this.renderTableCell(this.state.users[i*4+1]) }
+          { this.state.users[i*4+2] && this.renderTableCell(this.state.users[i*4+2]) }
+          { this.state.users[i*4+3] && this.renderTableCell(this.state.users[i*4+3]) }
+        </tr>
+      )
+    }
+    return table;
+  }
+
+  renderTableCell(user) {
+    return (
+      <td style={{padding:'10px', border:'1px solid #000000'}}>
+        <img src={user.picture.large} />
+        <br></br>{'gender: ' + user.gender}
+        <br></br>{'name: ' +
+          user.name.title + ' ' +
+          user.name.first + ' ' +
+          user.name.last}
+        <br></br>{'Date of birth: ' + user.dob.date.substr(0, 10)}
+        <br></br>{'e-mail: ' + user.email}
+      </td>
+    )
   }
 
   render() {
+    console.log("users", this.state.users);
     var app = (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo"/>
         </header>
         <h1 id='title'>Secret Profiles</h1>
-        <table id='users'>
+        <table id='users' width={this.state.width} style={{textAlign:'center'}}>
           <tbody>
-            { this.renderTableData() }
+            { this.renderTable() }
           </tbody>
         </table>
       </div>
