@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import $ from "jquery";
-import logo from '../logo.svg';
-export default class Content extends Component {
+import logo from '../revelation.png';
+
+export default class Content extends React.Component {
+
     state = {
         width: window.innerWidth,
         users: [],
@@ -91,7 +93,7 @@ export default class Content extends Component {
     renderTableCell(user) {
         return (
             <td style={{padding:'10px', border:'1px solid #000000'}}>
-                <img src={user.picture.large} />
+                <img src={user.picture.large} alt="portrait"/>
                 <br></br>{'gender: ' + user.gender}
                 <br></br>{'name: ' +
             user.name.title + ' ' +
@@ -107,7 +109,7 @@ export default class Content extends Component {
         return <div className="content-container">
             I'm the content!
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
+                <img src={logo} className="App-logo" alt="revelation"/>
             </header>
             <h1 id='title'>Secret Profiles</h1>
             <table id='users' width={this.state.width} style={{textAlign:'center'}}>

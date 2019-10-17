@@ -1,7 +1,14 @@
 import React from 'react';
 import Sidebar from './components/Sidebar'
 import Content from './components/Content'
-import './App.css';
+import styled from 'styled-components';
+
+styled.div`
+    .app {
+        width: 200px;
+        padding-top: 25px;
+    }
+`;
 
 class App extends React.Component {
   
@@ -23,13 +30,10 @@ class App extends React.Component {
   };
 
   render() {
-    console.log("users", this.state.users);
     return (
-      <div className="App">
-        <div className="app">
-          <Sidebar />
-          <Content />
-        </div>
+      <div className="app">
+        <Sidebar />
+        <Content />
       </div>
     );
   }
